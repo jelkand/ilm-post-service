@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - '3000:3000'
+    networks:
+      - service_net
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+      - /usr/src/app/dist
+    depends_on:
+      - dev_db
+    environment:
+      NODE_ENV: development
+      POSTGRES_PASSWORD: dummypass
+      POSTRES_DB: dev-db
+      POSTGRES_USER: jelkand
+
+  ci:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    networks:
+      - service_net
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+      - /usr/src/app/dist
+    environment:
+      NODE_ENV: production
+      POSTGRES_PASSWORD: fnord
+      POSTRES_DB: fnord
+      POSTGRES_USER: fnord
+
+  dev_db:
+    image: postgres:11.5-alpine
+    environment:
+      POSTGRES_PASSWORD: dummypass
+      POSTRES_DB: dev-db
+      POSTGRES_USER: jelkand
+
+networks:
+  service_net:
