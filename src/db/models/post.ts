@@ -6,25 +6,28 @@ import {
   UpdatedAt,
   PrimaryKey,
   DataType,
+  Default,
 } from 'sequelize-typescript'
 
 @Table
-class Post extends Model<Post> {
+export class Post extends Model<Post> {
   @PrimaryKey
-  @Column(DataType.UUIDV4)
+  @Default(DataType.UUIDV4)
+  @Column(DataType.UUID)
   id!: string
 
-  @Column(DataType.UUIDV4)
+  @Default(DataType.UUIDV4)
+  @Column(DataType.UUID)
   userId!: string
 
-  @Column
-  body!: Text
+  @Column(DataType.TEXT)
+  body!: string
 
   @CreatedAt
-  @Column
-  createdAt!: Date
+  @Column(DataType.DATE)
+  createdAt!: string
 
   @UpdatedAt
-  @Column
-  updatedAt!: Date
+  @Column(DataType.DATE)
+  updatedAt!: string
 }
