@@ -4,24 +4,33 @@ import {
   IMutationResolvers,
   IPostResolvers,
 } from 'typings/graphql'
-import { Post as dbPost } from 'db/models/Post'
+import { Post } from 'db/models/Post'
 
+// export const initializeResolvers = () => {
 const Query: IQueryResolvers = {
   posts: async (obj, { userId }, context, info) =>
-    dbPost.findAll({ where: { userId } }),
-  post: async (obj, { id }, context, info) => dbPost.findByPk(id),
+    Post.findAll({ where: { userId } }),
+  post: async (obj, { id }, context, info) => Post.findByPk(id),
 }
 const Mutation: IMutationResolvers = {
-  createPost: async (obj, { body }, context, info) => dbPost.create({ body }),
+  createPost: async (obj, { body }, { db }, info) => {
+    const post = new Post({ body })
+    await post.save()
+    await post.reload()
+    console.log(await Post.findAndCountAll())
+    console.log(post, typeof post)
+    return { id: post.get('id') }
+  },
   updatePost: async (obj, { id, body }, context, info) =>
-    dbPost.update({ body }, { where: { id } }),
+    Post.update({ body }, { where: { id } }),
   deletePost: async (obj, { id }, context, info) =>
-    dbPost.destroy({ where: { id } }),
+    Post.destroy({ where: { id } }),
 }
-const Post: IPostResolvers = {}
+const PostResolver: IPostResolvers = {}
 
 export default {
   Query,
   Mutation,
-  Post,
+  Post: PostResolver,
 }
+// }

@@ -14,7 +14,7 @@
     "lint:fix": "eslint --fix .",
     "migrate": "sequelize db:migrate",
     "start:ci": "node dist/server/server.js",
-    "start:dev": "concurrently \"npm run build:js:watch\" \"nodemon dist/server/server.js\"",
+    "start:dev": "concurrently \"npm run build:js:watch\" \"nodemon --exec babel-node dist/server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -45,6 +45,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-transform-typescript-metadata": "^0.2.2",
     "concurrently": "^4.1.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",

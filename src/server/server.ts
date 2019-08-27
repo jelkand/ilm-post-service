@@ -6,8 +6,7 @@ import resolvers from 'graphql/resolvers'
 import { buildFederatedSchema } from '@apollo/federation'
 import { sequelize as db } from 'db/sequelize'
 ;(async () => {
-  await db.sync({ force: true })
-
+  await db.sync()
   const server = new ApolloServer({
     schema: buildFederatedSchema([{ typeDefs, resolvers }]),
     context: { db },

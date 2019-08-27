@@ -1,6 +1,6 @@
 {
-  "presets": ["@babel/env", "@babel/typescript"],
   "plugins": [
+    "babel-plugin-transform-typescript-metadata",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/proposal-class-properties", { "loose": true }],
     "@babel/proposal-object-rest-spread",
@@ -8,11 +8,20 @@
       "module-resolver",
       {
         "root": ["./src"],
-        "alias": {
-          "test": "./test"
-        },
         "extensions": [".ts", ".tsx", ".js", ".jsx", ".es", ".es6", ".mjs"]
       }
     ]
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": "commonjs"
+      }
+    ],
+    "@babel/preset-typescript"
   ]
 }

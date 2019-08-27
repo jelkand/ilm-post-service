@@ -25,9 +25,9 @@ export class Post extends Model<Post> {
 
   @CreatedAt
   @Column(DataType.DATE)
-  createdAt!: string
+  createdAt!: Date
 
   @UpdatedAt
   @Column(DataType.DATE)
-  updatedAt!: string
+  updatedAt!: Date
 }
