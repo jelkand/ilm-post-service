@@ -1,6 +1,6 @@
 {
-  "name": "typescript-service-template",
-  "version": "0.1.0",
+  "name": "ilm-post-service",
+  "version": "1.0.0",
   "description": "An opinionated template for spinning up typescript services.",
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -12,19 +12,19 @@
     "lint:fix": "eslint --fix .",
     "migrate": "sequelize db:migrate",
     "start:ci": "node dist/server/server.js",
-    "start:dev": "concurrently \"npm run build:watch\" \"nodemon --exec node dist/server/server.js\"",
+    "start:dev": "concurrently \"npm run build:watch\" \"nodemon dist/server/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jelkand/typescript-service-template.git"
+    "url": "git+https://github.com/jelkand/ilm-post-service.git"
   },
   "author": "Jack Anderson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jelkand/typescript-service-template/issues"
+    "url": "https://github.com/jelkand/ilm-post-service/issues"
   },
-  "homepage": "https://github.com/jelkand/typescript-service-template#readme",
+  "homepage": "https://github.com/jelkand/ilm-post-service#readme",
   "devDependencies": {
     "@graphql-codegen/cli": "^1.6.1",
     "@graphql-codegen/typescript": "^1.6.1",
@@ -58,7 +58,6 @@
     "graphql": "^14.4.2",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
-    "regenerator-runtime": "^0.13.3",
     "sequelize": "^5.14.0",
     "sequelize-cli": "^5.5.0",
     "sequelize-typescript": "^1.0.0-beta.4",
