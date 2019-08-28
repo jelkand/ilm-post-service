@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime'
 import { QueryInterface } from 'sequelize'
 import uuid from 'uuid/v4'
 

@@ -2,7 +2,7 @@ import * as ts from 'typescript'
 import * as Bluebird from 'bluebird';
 
 declare global {
-  export interface Promise<T> extends Bluebird<T> {}
+  interface Promise<T> extends Bluebird<T> {}
   namespace NodeJS {
     interface ProcessEnv {
       POSTGRES_DB: string

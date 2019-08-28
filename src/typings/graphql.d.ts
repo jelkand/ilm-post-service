@@ -28,6 +28,7 @@ export type IMutation = {
 
 export type IMutationCreatePostArgs = {
   id?: Maybe<Scalars['ID']>,
+  userId: Scalars['ID'],
   body: Scalars['String']
 };
 
@@ -187,7 +188,7 @@ export type IUserResolvers<ContextType = any, ParentType extends IResolversParen
 }>;
 
 export type IMutationResolvers<ContextType = any, ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']> = ResolversObject<{
-  createPost?: Resolver<Maybe<IResolversTypes['Post']>, ParentType, ContextType, RequireFields<IMutationCreatePostArgs, 'body'>>,
+  createPost?: Resolver<Maybe<IResolversTypes['Post']>, ParentType, ContextType, RequireFields<IMutationCreatePostArgs, 'userId' | 'body'>>,
   updatePost?: Resolver<Maybe<IResolversTypes['Post']>, ParentType, ContextType, RequireFields<IMutationUpdatePostArgs, 'id' | 'body'>>,
   deletePost?: Resolver<Maybe<IResolversTypes['Post']>, ParentType, ContextType, RequireFields<IMutationDeletePostArgs, 'id'>>,
 }>;

@@ -1,10 +1,9 @@
-import 'regenerator-runtime/runtime'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
-import typeDefs from 'graphql/typeDefs'
-import resolvers from 'graphql/resolvers'
 import { buildFederatedSchema } from '@apollo/federation'
-import { sequelize as db } from 'db/sequelize'
+import { sequelize as db } from '../db/sequelize'
+import typeDefs from '../graphql/typeDefs'
+import resolvers from '../graphql/resolvers'
 ;(async () => {
   await db.sync()
   const server = new ApolloServer({

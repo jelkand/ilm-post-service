@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize-typescript'
-// import { Post as dbPost } from 'db/models/Post'
 
 export const sequelize = new Sequelize({
   database: process.env.POSTGRES_DB,
