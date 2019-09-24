@@ -44,7 +44,8 @@ services:
   db:
     image: postgres:11.5-alpine
     ports:
-      - '5432:5432'
+      - 5432
+    # - '5432:5432'
     environment:
       POSTGRES_PASSWORD: dummypass
       POSTRES_DB: dev-db

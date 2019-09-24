@@ -3,7 +3,7 @@ import {
   IMutationResolvers,
   IPostResolvers,
 } from '../typings/graphql'
-import { Post } from '../db/models/Post'
+import { Post } from '../db/models/Post/Post'
 
 const Query: IQueryResolvers = {
   posts: async (obj, { userId }, context, info) =>
