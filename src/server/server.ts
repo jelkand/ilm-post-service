@@ -17,6 +17,6 @@ import resolvers from '../graphql/resolvers'
   server.applyMiddleware({ app })
 
   app.listen(port, () =>
-    console.log(`Typescript template app listening on port ${port}!`),
+    console.log(`ILM Post Service listening on port ${port}!`),
   )
 })()

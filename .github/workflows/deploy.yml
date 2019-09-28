@@ -1,0 +1,23 @@
+name: Deploy Post Service
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker image with compose
+        run: docker-compose build ci
+      - name: Tag the Docker Image
+        run: docker tag ilm-post-service:$(date +%s)
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jelkand/ilm-post-service
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
