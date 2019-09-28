@@ -20,7 +20,7 @@ services:
       PORT: 3001
       NODE_ENV: development
       POSTGRES_PASSWORD: dummypass
-      POSTRES_DB: dev-db
+      POSTGRES_DB: dev-db
       POSTGRES_USER: jelkand
       POSTGRES_HOST: db
 
