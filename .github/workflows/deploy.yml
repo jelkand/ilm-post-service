@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build the Docker image with compose
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: docker-compose build ci
       - name: Tag the Docker Image
         run: docker tag ilm-post-service:$(date +%s)
