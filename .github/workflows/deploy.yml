@@ -18,7 +18,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: docker-compose build ci
       - name: Tag the Docker Image
-        run: docker tag ilm-post-service:$(date +%s)
+        run: docker tag ilm-post-service ilm-post-service:$(date +%s)
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
