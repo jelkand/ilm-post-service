@@ -14,7 +14,6 @@ export default gql`
 
   type Post @key(fields: "id") {
     id: ID!
-    user: User! @external
     userId: String!
     body: String!
     createdAt: String!

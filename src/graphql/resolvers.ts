@@ -17,7 +17,9 @@ const Mutation: IMutationResolvers = {
     Post.update({ body }, { where: { id } }),
   deletePost: (obj, { id }, context, info) => Post.destroy({ where: { id } }),
 }
-const PostResolver: IPostResolvers = {}
+const PostResolver: IPostResolvers = {
+  __resolveReference: ({ id: string }) => Post.findByPk(id),
+}
 
 export default {
   Query,

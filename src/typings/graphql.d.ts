@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { IPostDbObject } from './src/db/models/';
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -19,7 +19,7 @@ export type Scalars = {
 
 
 export type IMutation = {
-  __typename?: 'Mutation',
+   __typename?: 'Mutation',
   createPost?: Maybe<IPost>,
   updatePost?: Maybe<IPost>,
   deletePost?: Maybe<IPost>,
@@ -44,9 +44,8 @@ export type IMutationDeletePostArgs = {
 };
 
 export type IPost = {
-  __typename?: 'Post',
+   __typename?: 'Post',
   id: Scalars['ID'],
-  user: IUser,
   userId: Scalars['String'],
   body: Scalars['String'],
   createdAt: Scalars['String'],
@@ -54,7 +53,7 @@ export type IPost = {
 };
 
 export type IQuery = {
-  __typename?: 'Query',
+   __typename?: 'Query',
   posts?: Maybe<Array<Maybe<IPost>>>,
   post?: Maybe<IPost>,
 };
@@ -70,10 +69,11 @@ export type IQueryPostArgs = {
 };
 
 export type IUser = {
-  __typename?: 'User',
+   __typename?: 'User',
   id: Scalars['ID'],
   posts: Array<Maybe<IPost>>,
 };
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -149,10 +149,10 @@ export type IResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Post: ResolverTypeWrapper<IPostDbObject>,
-  User: ResolverTypeWrapper<Omit<IUser, 'posts'> & { posts: Array<Maybe<IResolversTypes['Post']>> }>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Mutation: ResolverTypeWrapper<{}>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  User: ResolverTypeWrapper<Omit<IUser, 'posts'> & { posts: Array<Maybe<IResolversTypes['Post']>> }>,
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -160,10 +160,10 @@ export type IResolversParentTypes = ResolversObject<{
   Query: {},
   ID: Scalars['ID'],
   Post: IPostDbObject,
-  User: Omit<IUser, 'posts'> & { posts: Array<Maybe<IResolversTypes['Post']>> },
   String: Scalars['String'],
   Mutation: {},
   Boolean: Scalars['Boolean'],
+  User: Omit<IUser, 'posts'> & { posts: Array<Maybe<IResolversParentTypes['Post']>> },
 }>;
 
 export type IQueryResolvers<ContextType = any, ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']> = ResolversObject<{
@@ -172,19 +172,12 @@ export type IQueryResolvers<ContextType = any, ParentType extends IResolversPare
 }>;
 
 export type IPostResolvers<ContextType = any, ParentType extends IResolversParentTypes['Post'] = IResolversParentTypes['Post']> = ResolversObject<{
-  __resolveReference?: Resolver<Maybe<IResolversTypes['Post']>, Pick<ParentType, 'id'>, ContextType>,
-  id?: Resolver<IResolversTypes['ID'], Pick<ParentType, 'id'>, ContextType>,
-
-  userId?: Resolver<IResolversTypes['String'], Pick<ParentType, 'id'>, ContextType>,
-  body?: Resolver<IResolversTypes['String'], Pick<ParentType, 'id'>, ContextType>,
-  createdAt?: Resolver<IResolversTypes['String'], Pick<ParentType, 'id'>, ContextType>,
-  updatedAt?: Resolver<IResolversTypes['String'], Pick<ParentType, 'id'>, ContextType>,
-}>;
-
-export type IUserResolvers<ContextType = any, ParentType extends IResolversParentTypes['User'] = IResolversParentTypes['User']> = ResolversObject<{
-  __resolveReference?: Resolver<Maybe<IResolversTypes['User']>, Pick<ParentType, 'id'>, ContextType>,
-
-  posts?: Resolver<Array<Maybe<IResolversTypes['Post']>>, Pick<ParentType, 'id'>, ContextType>,
+  __resolveReference?: ReferenceResolver<Maybe<IResolversTypes['Post']>, { __typename: 'Post' } & Pick<ParentType, 'id'>, ContextType>,
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>,
+  userId?: Resolver<IResolversTypes['String'], ParentType, ContextType>,
+  body?: Resolver<IResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<IResolversTypes['String'], ParentType, ContextType>,
+  updatedAt?: Resolver<IResolversTypes['String'], ParentType, ContextType>,
 }>;
 
 export type IMutationResolvers<ContextType = any, ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']> = ResolversObject<{
@@ -193,11 +186,17 @@ export type IMutationResolvers<ContextType = any, ParentType extends IResolversP
   deletePost?: Resolver<Maybe<IResolversTypes['Post']>, ParentType, ContextType, RequireFields<IMutationDeletePostArgs, 'id'>>,
 }>;
 
+export type IUserResolvers<ContextType = any, ParentType extends IResolversParentTypes['User'] = IResolversParentTypes['User']> = ResolversObject<{
+  __resolveReference?: ReferenceResolver<Maybe<IResolversTypes['User']>, { __typename: 'User' } & Pick<ParentType, 'id'>, ContextType>,
+
+  posts?: Resolver<Array<Maybe<IResolversTypes['Post']>>, ParentType, ContextType>,
+}>;
+
 export type IResolvers<ContextType = any> = ResolversObject<{
   Query?: IQueryResolvers<ContextType>,
   Post?: IPostResolvers<ContextType>,
-  User?: IUserResolvers<ContextType>,
   Mutation?: IMutationResolvers<ContextType>,
+  User?: IUserResolvers<ContextType>,
 }>;
 
 

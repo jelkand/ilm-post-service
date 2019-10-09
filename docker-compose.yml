@@ -40,9 +40,9 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3001
-      POSTGRES_PASSWORD: fnord
-      POSTGRES_DB: fnord
-      POSTGRES_USER: fnord
+      POSTGRES_PASSWORD:
+      POSTGRES_DB:
+      POSTGRES_USER:
 
   db:
     image: postgres:11.5-alpine
