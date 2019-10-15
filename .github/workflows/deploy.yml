@@ -10,18 +10,64 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Build the Docker image with compose
-        env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        run: docker-compose build ci
-      - name: Tag the Docker Image
-        run: docker tag ilm-post-service ilm-post-service:$(date +%s)
-      - name: Publish to Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: jelkand/ilm-post-service
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Checkout
+        uses: actions/checkout@v1      
+      - name: Execute Tests
+        run: docker-compose run --rm ci npm run test
+      # - name: Build the Docker image with compose
+      #   env:
+      #     POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      #     POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      #     POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      #   run: docker-compose build ci
+      # - name: Tag the Docker Image
+      #   run: docker tag ilm-post-service ilm-post-service:$(date +%s)
+      # - name: Publish to Registry
+      #   uses: elgohr/Publish-Docker-Github-Action@master
+      #   with:
+      #     name: jelkand/ilm-post-service
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+ 
+    
+    - name: Build and push   
+      uses: azure/k8s-actions/docker-login@master
+      env:
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      with:
+        login-server: ilmservice.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - run: |
+        docker-compose build ci
+        docker tag ilm-post-service ilm-post-service:${{ github.sha }}
+        docker push ilmservice.azurecr.io ilm-post-service:${{ github.sha }}
+      
+    # Set the target AKS cluster. 
+    - name: Set target AKS cluster
+      uses: azure/k8s-actions/aks-set-context@master
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ilmk8s
+        resource-group: ILM
+        
+    # TODO: Move Env Vars to Secrets
+    # - uses: azure/k8s-actions/k8s-create-secret@master
+    #   with:
+    #     container-registry-url: ilmservice.azurecr.io
+    #     container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+    #     container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+    #     secret-name: demo-k8s-secret
+
+    - uses: azure/k8s-actions/k8s-deploy@master
+      with:
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          ilmservice.azurecr.io/ilm-post-service:${{ github.sha }}
+        # imagepullsecrets: |
+        #   demo-k8s-secret
