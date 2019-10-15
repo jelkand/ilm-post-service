@@ -28,7 +28,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         run: |
           docker-compose build ci
-          docker tag ilm-post-service ilm-post-service:${{ github.sha }}
+          docker tag ilm-post-service ilmservice.azurecr.io/ilm-post-service:${{ github.sha }}
           docker push ilmservice.azurecr.io/ilm-post-service:${{ github.sha }}
 
       # Set the target AKS cluster.
