@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Execute Tests
-        run: docker-compose run --rm dev npm run test
+      # - name: Execute Tests
+      #   run: docker-compose run --rm dev npm run test
       - name: Build and push
         uses: azure/k8s-actions/docker-login@master
         env:
