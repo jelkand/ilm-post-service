@@ -52,7 +52,7 @@
     "@types/sequelize": "^4.28.4",
     "@types/uuid": "^3.4.5",
     "@types/validator": "^10.11.2",
-    "apollo-server-express": "^2.8.1",
+    "apollo-server-express": "^2.14.2",
     "bluebird": "^3.5.5",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
